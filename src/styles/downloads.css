@@ -1,0 +1,118 @@
+/* ---------- downloads ---------- */
+
+.downloads {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(40px, 6vw, 104px);
+  padding: clamp(72px, 9vw, 140px) var(--gutter) clamp(72px, 10vw, 160px);
+}
+
+.downloads-head {
+  display: grid;
+  align-content: start;
+  gap: clamp(18px, 2vw, 30px);
+}
+
+.downloads-head h2 {
+  font-size: clamp(38px, 5.7vw, 92px);
+  font-weight: 800;
+  line-height: 0.97;
+  letter-spacing: -0.05em;
+}
+
+.downloads-head p {
+  max-width: 30em;
+  color: var(--gray);
+  font-size: 17px;
+}
+
+.downloads-head .downloads-lead {
+  color: var(--paper);
+}
+
+.dl-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 32px;
+  padding-block: clamp(20px, 2.2vw, 34px);
+  border-top: 1px solid var(--line);
+}
+
+.dl-row:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.dl-id {
+  display: grid;
+  gap: 2px;
+}
+
+.dl-platform {
+  font-size: clamp(30px, 3.5vw, 56px);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.045em;
+  transition: color 200ms ease;
+}
+
+.dl-row[data-current] .dl-platform {
+  color: var(--green);
+}
+
+.dl-detail {
+  display: flex;
+  gap: 18px;
+  color: var(--gray);
+  font-size: 15.5px;
+  font-weight: 600;
+}
+
+.dl-yours {
+  display: none;
+  color: var(--green);
+}
+
+.dl-row[data-current] .dl-yours {
+  display: inline;
+}
+
+.dl-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 32px;
+}
+
+.dl-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  font-size: clamp(17px, 1.5vw, 21px);
+  font-weight: 800;
+  letter-spacing: -0.015em;
+  transition: color 160ms ease;
+}
+
+.dl-link:hover {
+  color: var(--green);
+}
+
+.fineprint {
+  padding-top: clamp(20px, 2.2vw, 34px);
+  border-top: 1px solid var(--line);
+  color: var(--gray);
+  font-size: 15px;
+}
+
+.fineprint a {
+  color: var(--paper);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.fineprint a:hover {
+  color: var(--green);
+}

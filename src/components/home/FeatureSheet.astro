@@ -1,0 +1,27 @@
+---
+import Peek from '../Peek.astro';
+import type { CrewColor } from '../../config/brand.ts';
+
+interface Props {
+  color: CrewColor;
+  title: string;
+  body: string;
+}
+
+const { color, title, body } = Astro.props;
+---
+
+<article class={`sheet sheet--${color} reveal`}>
+  <div class="sheet-in">
+    <div class="sheet-text">
+      <h2>{title}</h2>
+      <p>{body}</p>
+    </div>
+    <!-- Illustrations restate the text beside them, so they stay out of the
+         accessibility tree. -->
+    <div class="sheet-art" aria-hidden="true">
+      <Peek color={color} />
+      <slot />
+    </div>
+  </div>
+</article>

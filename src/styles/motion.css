@@ -1,0 +1,46 @@
+/* ---------- motion ---------- */
+
+@keyframes line-up {
+  from {
+    transform: translateY(112%);
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(36px);
+  }
+}
+
+@keyframes blink {
+  0%,
+  94%,
+  100% {
+    transform: scaleY(1);
+  }
+  97% {
+    transform: scaleY(0.1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .js .peek .axo,
+  .js .sheet-text > *,
+  .js .frag > *,
+  .js .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

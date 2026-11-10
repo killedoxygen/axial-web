@@ -1,0 +1,85 @@
+---
+import { useCopy } from '../../i18n/index.ts';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Downloads from './Downloads.astro';
+import Features from './Features.astro';
+import FirstRunHelp from './FirstRunHelp.astro';
+import Hero from './Hero.astro';
+import SiteFooter from './SiteFooter.astro';
+import SiteNav from './SiteNav.astro';
+import Statement from './Statement.astro';
+
+// The locale comes from the route (`/` or `/es/`), so sections read their own
+// copy with `useCopy(Astro.currentLocale)` instead of taking it as a prop.
+const copy = useCopy(Astro.currentLocale);
+---
+
+<BaseLayout title={copy.meta.title} description={copy.meta.description}>
+  <SiteNav />
+
+  <main id="top">
+    <Hero />
+    <Statement />
+
+    <div class="sheets">
+      <Features />
+
+      <div class="sheet sheet--ink">
+        <Downloads />
+        <SiteFooter />
+      </div>
+    </div>
+  </main>
+
+  <FirstRunHelp />
+</BaseLayout>
+
+<script>
+  import { prefersReducedMotion } from '../../scripts/motion.ts';
+
+  /* ---- things that appear when they scroll into view ---- */
+  const seen = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        entry.target.classList.add('is-in');
+        seen.unobserve(entry.target);
+      }
+    },
+    { threshold: 0.25 },
+  );
+  document.querySelectorAll('.reveal').forEach((el) => seen.observe(el));
+
+  /* ---- the crew watches the pointer ---- */
+  if (!prefersReducedMotion() && matchMedia('(pointer: fine)').matches) {
+    const lookers = Array.from(
+      document.querySelectorAll<SVGGElement>('.peek .axo-look'),
+    );
+    let pending = false;
+    let px = 0;
+    let py = 0;
+    addEventListener(
+      'pointermove',
+      (event) => {
+        px = event.clientX;
+        py = event.clientY;
+        if (pending) return;
+        pending = true;
+        requestAnimationFrame(() => {
+          pending = false;
+          for (const look of lookers) {
+            const rect = look.getBoundingClientRect();
+            if (rect.bottom < 0 || rect.top > innerHeight) continue;
+            const dx = px - (rect.left + rect.width / 2);
+            const dy = py - (rect.top + rect.height / 2);
+            const distance = Math.hypot(dx, dy) || 1;
+            const reach = Math.min(1, distance / 260) * 13;
+            look.style.setProperty('--lx', `${(dx / distance) * reach}px`);
+            look.style.setProperty('--ly', `${(dy / distance) * reach}px`);
+          }
+        });
+      },
+      { passive: true },
+    );
+  }
+</script>

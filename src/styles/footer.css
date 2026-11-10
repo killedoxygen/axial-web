@@ -1,0 +1,64 @@
+/* ---------- footer ---------- */
+
+.footer {
+  overflow: hidden;
+  padding-inline: var(--gutter);
+}
+
+.footer-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px 48px;
+}
+
+.footer-word {
+  margin-left: -0.05em;
+  font-size: clamp(120px, 27vw, 440px);
+  font-weight: 800;
+  line-height: 0.8;
+  letter-spacing: -0.06em;
+}
+
+.footer-side {
+  display: grid;
+  gap: 8px;
+  max-width: 19em;
+  padding-bottom: clamp(4px, 1.6vw, 28px);
+  color: var(--gray);
+  font-size: clamp(17px, 1.5vw, 22px);
+  font-weight: 500;
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 28px;
+  color: var(--paper);
+}
+
+.footer-crew {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: clamp(6px, 1.6vw, 28px);
+  margin-top: clamp(40px, 6vw, 96px);
+}
+
+.js .reveal.downloads-head,
+.js .reveal.downloads-list {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 800ms var(--ease),
+    transform 800ms var(--ease);
+}
+
+.js .reveal.downloads-list {
+  transition-delay: 120ms;
+}
+
+.js .reveal.is-in {
+  opacity: 1;
+  transform: none;
+}

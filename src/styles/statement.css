@@ -1,0 +1,27 @@
+/* ---------- statement ---------- */
+
+.say {
+  padding: clamp(96px, 15vw, 240px) var(--gutter);
+}
+
+.say p {
+  max-width: 17em;
+  font-size: clamp(30px, 5.3vw, 86px);
+  font-weight: 800;
+  line-height: 1.04;
+  letter-spacing: -0.045em;
+}
+
+.js .w {
+  color: rgb(240 243 239 / 0.2);
+  transition: color 420ms ease;
+}
+
+.js .w.is-lit {
+  color: var(--paper);
+}
+
+.w--em,
+.js .w--em.is-lit {
+  color: var(--green);
+}

@@ -1,0 +1,79 @@
+---
+import { platforms } from '../../config/release.ts';
+import { links } from '../../config/site.ts';
+import { useCopy } from '../../i18n/index.ts';
+import { Icon } from '../Icon.tsx';
+
+const copy = useCopy(Astro.currentLocale).downloads;
+---
+
+<section id="downloads" class="downloads">
+  <div class="downloads-head reveal">
+    <h2>{copy.heading}</h2>
+    <p class="downloads-lead">{copy.lead}</p>
+    <p role="note">{copy.notice}</p>
+  </div>
+
+  <div class="downloads-list reveal">
+    {
+      platforms.map((platform) => (
+        <div class="dl-row" id={`download-${platform.id}`}>
+          <div class="dl-id">
+            <span class="dl-platform">{platform.name}</span>
+            <span class="dl-detail">
+              <span>{copy[platform.maturity]}</span>
+              <span class="dl-yours">{copy.yourDevice}</span>
+            </span>
+          </div>
+          <div class="dl-links">
+            {platform.builds.map((build) => (
+              <a
+                class="dl-link"
+                href={build.url}
+                data-build={build.id}
+                download
+              >
+                <span>{build.label}</span>
+                <Icon name="download" size={18} />
+              </a>
+            ))}
+          </div>
+        </div>
+      ))
+    }
+    <p class="fineprint">
+      {copy.fineprintBefore}<a href={links.releases}>{copy.releasesArchive}</a>{
+        copy.fineprintAfter
+      }
+    </p>
+  </div>
+</section>
+
+<script>
+  import { assetMatchers } from '../../config/release.ts';
+  import { links } from '../../config/site.ts';
+
+  interface ReleaseAsset {
+    name: string;
+    browser_download_url: string;
+  }
+
+  /* ---- point every button at the newest release ---- */
+  fetch(links.latestReleaseApi)
+    .then((response) => (response.ok ? response.json() : Promise.reject()))
+    .then(([release]) => {
+      if (!release?.assets) return;
+      const assets: ReleaseAsset[] = release.assets;
+      for (const [build, matches] of Object.entries(assetMatchers)) {
+        const asset = assets.find((candidate) => matches(candidate.name));
+        if (!asset) continue;
+        for (const link of document.querySelectorAll<HTMLAnchorElement>(
+          `[data-build="${build}"]`,
+        )) {
+          link.href = asset.browser_download_url;
+        }
+      }
+    })
+    // The build-time links still work, so a failed lookup needs no handling.
+    .catch(() => {});
+</script>

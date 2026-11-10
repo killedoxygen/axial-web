@@ -1,0 +1,60 @@
+---
+import { useCopy } from '../../i18n/index.ts';
+import Peek from '../Peek.astro';
+
+const copy = useCopy(Astro.currentLocale).downloads.holdup;
+---
+
+<!-- Shown after an unsigned macOS or Windows download starts, to explain the
+     operating system's warning before the player meets it. -->
+<dialog class="holdup" id="holdup" aria-labelledby="holdup-title">
+  <Peek color="green" />
+  <div class="holdup-body">
+    <h2 id="holdup-title">{copy.title}</h2>
+    {
+      (['mac', 'win'] as const).map((os) => (
+        <div class="holdup-os" data-os={os} hidden>
+          <p>{copy[os].lead}</p>
+          <ol>
+            {copy[os].steps.map((step) => (
+              <li>{step}</li>
+            ))}
+          </ol>
+          {copy[os].note && <p class="holdup-note">{copy[os].note}</p>}
+        </div>
+      ))
+    }
+    <form method="dialog">
+      <button class="btn" type="submit">{copy.close}</button>
+    </form>
+  </div>
+</dialog>
+
+<script>
+  const holdup = document.querySelector<HTMLDialogElement>('#holdup');
+
+  document.addEventListener('click', (event) => {
+    const link = (event.target as Element).closest<HTMLAnchorElement>(
+      'a[data-build]',
+    );
+    const build = link?.dataset.build ?? '';
+    const os = build.startsWith('macos')
+      ? 'mac'
+      : build.startsWith('windows')
+        ? 'win'
+        : null;
+    if (!holdup || !os) return;
+    for (const block of holdup.querySelectorAll<HTMLElement>('.holdup-os')) {
+      block.hidden = block.dataset.os !== os;
+    }
+    /* Let the download start first, then explain what comes next. */
+    setTimeout(() => {
+      holdup.showModal();
+      requestAnimationFrame(() => holdup.classList.add('is-in'));
+    }, 350);
+  });
+  holdup?.addEventListener('click', (event) => {
+    if (event.target === holdup) holdup.close();
+  });
+  holdup?.addEventListener('close', () => holdup.classList.remove('is-in'));
+</script>

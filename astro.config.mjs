@@ -1,5 +1,6 @@
 import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
+import { defaultLocale, locales } from './src/config/locales.ts';
 import { fileURLToPath } from 'node:url';
 
 const iconSubset = fileURLToPath(
@@ -9,9 +10,11 @@ const iconSubset = fileURLToPath(
 export default defineConfig({
   site: 'https://axial.run',
   integrations: [react()],
+  // Keep index routes as directories and locale error pages as /es/404.html.
+  build: { format: 'preserve' },
   i18n: {
-    defaultLocale: 'en',
-    locales: ['en', 'es'],
+    defaultLocale,
+    locales: [...locales],
     routing: {
       prefixDefaultLocale: false,
     },

@@ -10,6 +10,7 @@
     "deploy": "pnpm build && wrangler deploy",
     "preview": "astro preview",
     "check": "astro check",
+    "og": "node scripts/generate-og.mjs",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
   },
@@ -24,8 +25,10 @@
     "@astrojs/check": "^0.9.4",
     "@types/react": "^19.1.16",
     "@types/react-dom": "^19.1.9",
+    "opentype.js": "^2.0.0",
     "prettier": "^3.8.4",
     "prettier-plugin-astro": "^0.14.1",
+    "sharp": "0.35.5",
     "typescript": "^5.9.2",
     "wrangler": "4.159.0"
   }

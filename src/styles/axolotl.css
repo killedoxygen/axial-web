@@ -1,0 +1,89 @@
+/* ---------- axolotl ---------- */
+
+.axo {
+  display: block;
+  width: 100%;
+  height: auto;
+  fill: currentColor;
+  overflow: visible;
+}
+
+.axo-eye,
+.axo-mouth {
+  fill: var(--axo-hole, var(--ink));
+}
+
+.axo-look {
+  transform: translate(var(--lx, 0), var(--ly, 0));
+  transition: transform 160ms ease-out;
+}
+
+.axo-eye {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: blink 6.4s infinite;
+}
+
+.peek {
+  display: block;
+  overflow: hidden;
+  padding-top: 14%;
+}
+
+.peek .axo {
+  transition: transform 700ms var(--spring);
+}
+
+.js .peek .axo {
+  transform: translateY(106%);
+}
+
+.js .is-in .peek .axo {
+  transform: none;
+}
+
+.js .is-in .peek:hover .axo {
+  transform: translateY(-9%);
+  transition-duration: 320ms;
+}
+
+.peek--green {
+  color: var(--green);
+}
+.peek--cyan {
+  color: var(--cyan);
+}
+.peek--peri {
+  color: var(--peri);
+}
+.peek--pink {
+  color: var(--pink);
+}
+.peek--yellow {
+  color: var(--yellow);
+}
+
+.peek:nth-child(2) .axo {
+  transition-delay: 70ms;
+}
+.peek:nth-child(3) .axo {
+  transition-delay: 140ms;
+}
+.peek:nth-child(4) .axo {
+  transition-delay: 210ms;
+}
+.peek:nth-child(5) .axo {
+  transition-delay: 280ms;
+}
+.peek:nth-child(2) .axo-eye {
+  animation-delay: -1.7s;
+}
+.peek:nth-child(3) .axo-eye {
+  animation-delay: -3.9s;
+}
+.peek:nth-child(4) .axo-eye {
+  animation-delay: -0.8s;
+}
+.peek:nth-child(5) .axo-eye {
+  animation-delay: -5.1s;
+}

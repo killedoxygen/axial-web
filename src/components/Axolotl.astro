@@ -1,0 +1,22 @@
+---
+import { mark, markCrops } from '../config/brand.ts';
+
+interface Props {
+  /** `full` is the whole mark, `eyes` stops under the eyes, `smile` under the mouth. */
+  crop?: 'full' | 'eyes' | 'smile';
+  class?: string;
+}
+
+const { crop = 'full', class: className } = Astro.props;
+const viewBox = markCrops[crop].join(' ');
+---
+
+<svg class:list={['axo', className]} viewBox={viewBox} aria-hidden="true">
+  <path class="axo-gill axo-gill--left" d={mark.paths.left_gills}></path>
+  <path class="axo-gill axo-gill--right" d={mark.paths.right_gills}></path>
+  <path d={mark.paths.body}></path>
+  <g class="axo-look">
+    {mark.eyes.map((eye) => <rect class="axo-eye" {...eye} />)}
+    <path class="axo-mouth" d={mark.paths.mouth}></path>
+  </g>
+</svg>
