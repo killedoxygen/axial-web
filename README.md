@@ -17,6 +17,19 @@ pnpm dev
 pnpm build
 ```
 
+## Cloudflare deployment
+
+Cloudflare Workers Builds runs `pnpm run build`, then `npx wrangler deploy`.
+`wrangler.jsonc` explicitly deploys the static files in `dist/`, so Wrangler does
+not auto-install an Astro adapter or rebuild the site during deployment.
+Wrangler is pinned in the lockfile to keep deployments reproducible.
+
+To build and deploy locally with an authenticated Cloudflare account:
+
+```sh
+pnpm run deploy
+```
+
 ## Branding
 
 The axolotl mark and promotional artwork come from the Axial app's approved
