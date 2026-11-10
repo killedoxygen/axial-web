@@ -38,8 +38,7 @@
   transform: translateY(106%);
 }
 
-.js .is-in .peek .axo,
-.js .is-in.peek .axo {
+.js .is-in .peek .axo {
   transform: none;
 }
 
@@ -62,9 +61,6 @@
 }
 .peek--yellow {
   color: var(--yellow);
-}
-.peek--ink {
-  color: var(--ink);
 }
 
 .peek:nth-child(2) .axo {

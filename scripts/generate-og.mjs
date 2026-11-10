@@ -101,7 +101,6 @@ async function card(locale) {
   // The crew peeks over the screenshot's top edge, as it does on the page.
   const peekW = 104;
   const peekGap = 14;
-  const peekRise = 52; // How much of each axolotl shows above the edge.
   const crewW = CREW.length * peekW + (CREW.length - 1) * peekGap;
   const crewLeft = W - GUTTER - 28 - crewW;
   const eyeLine = (296 / 500) * peekW; // Matches the page's `eyes` crop.
@@ -114,7 +113,7 @@ async function card(locale) {
         ${CREW.map((color, i) =>
           axolotl(
             crewLeft + i * (peekW + peekGap),
-            shotTop - peekRise - (eyeLine - peekRise),
+            shotTop - eyeLine,
             peekW,
             color,
           ),

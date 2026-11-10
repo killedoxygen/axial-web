@@ -39,7 +39,6 @@
   .js .peek .axo,
   .js .sheet-text > *,
   .js .frag > *,
-  .js .bar span,
   .js .reveal {
     opacity: 1 !important;
     transform: none !important;

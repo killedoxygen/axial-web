@@ -127,9 +127,6 @@
 .js .is-in .frag > :nth-child(4) {
   transition-delay: 850ms;
 }
-.js .is-in .frag > :nth-child(5) {
-  transition-delay: 1350ms;
-}
 
 .frag--tiles {
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -168,8 +165,7 @@
   letter-spacing: 0;
 }
 
-.frag--steps,
-.frag--presets {
+.frag--steps {
   gap: clamp(14px, 1.7vw, 26px);
 }
 
@@ -180,8 +176,7 @@
   letter-spacing: 0;
 }
 
-.step,
-.preset {
+.step {
   display: flex;
   align-items: center;
   gap: 0.7em;
@@ -196,69 +191,6 @@
   border-radius: 50%;
   background: var(--green);
   color: var(--ink);
-}
-
-.tick--off {
-  background: none;
-  box-shadow: inset 0 0 0 2px var(--line);
-}
-
-.step--bar {
-  display: grid;
-  gap: 0.6em;
-}
-
-.bar {
-  display: block;
-  overflow: hidden;
-  height: 0.45em;
-  border-radius: 1em;
-  background: var(--raised-2);
-}
-
-.bar span {
-  display: block;
-  width: 90%;
-  height: 100%;
-  border-radius: 1em;
-  background: var(--green);
-  transform-origin: 0 50%;
-}
-
-.js .bar span {
-  transform: scaleX(0);
-  transition: transform 1800ms 1100ms var(--ease);
-}
-
-.js .is-in .bar span {
-  transform: none;
-}
-
-.preset {
-  padding: 0.9em 1em;
-  border-radius: 0.9em;
-  color: var(--gray);
-}
-
-.preset--on {
-  background: var(--raised-2);
-  color: var(--paper);
-}
-
-.preset-name {
-  flex: 1 1 auto;
-}
-
-.preset-tag {
-  color: var(--gray);
-  font-size: 0.7em;
-  font-weight: 600;
-  letter-spacing: 0;
-  text-align: right;
-}
-
-.preset--on .preset-tag {
-  color: var(--green);
 }
 
 @media (min-width: 900px) and (min-height: 680px) {

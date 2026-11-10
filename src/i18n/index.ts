@@ -1,8 +1,6 @@
 import { en } from './en.ts';
 import { es } from './es.ts';
 
-export type { Copy } from './en.ts';
-
 export const defaultLocale = 'en';
 export const locales = ['en', 'es'] as const;
 export type Locale = (typeof locales)[number];

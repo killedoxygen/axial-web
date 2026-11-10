@@ -45,7 +45,6 @@ export const es: Copy = {
     ] as [string, boolean][],
   },
   features: {
-    ariaLabel: 'Por qué Axial',
     lowEnd: {
       title: 'Jugable en el portátil que tienes',
       body: 'Axial va más allá de meter unos cuantos mods de rendimiento. Ajusta cómo funciona el propio juego en tu equipo, para que hasta un portátil viejo aguante el ritmo.',

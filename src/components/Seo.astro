@@ -35,13 +35,15 @@ const fallback = alternates.find((item) => item.locale === defaultLocale)!;
 const image = absolute(`/brand/og-${locale}.png`);
 const imageAlt = copy.meta.ogImageAlt;
 
-const schema = landingSchema({
-  locale,
-  url: canonical,
-  origin: origin.href,
-  description,
-  image,
-});
+const schema = noindex
+  ? undefined
+  : landingSchema({
+      locale,
+      url: canonical,
+      origin: origin.href,
+      description,
+      image,
+    });
 ---
 
 <title>{title}</title>

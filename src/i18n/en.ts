@@ -43,7 +43,6 @@ export const en = {
     ] as [string, boolean][],
   },
   features: {
-    ariaLabel: 'Why Axial',
     lowEnd: {
       title: 'Playable on the laptop you have',
       body: 'Axial goes further than dropping in a few performance mods. It tunes how the game itself runs on your machine, so even an old laptop keeps up.',
