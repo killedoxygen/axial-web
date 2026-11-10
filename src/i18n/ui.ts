@@ -11,7 +11,7 @@ export const ui = {
         'Axial is the Minecraft launcher that does the technical homework for you: Java, memory, loaders, and repairs. One clean home for every instance, mod, and world. Free downloads for macOS, Linux, and Windows.',
       ogLocale: 'en_US',
       ogImageAlt:
-        'Axial wordmark with the tagline "A calm home for your Minecraft" next to the launcher home screen',
+        'Axial wordmark above five axolotl mascots in green, cyan, lavender, pink, and yellow; tagline: "A Minecraft launcher for vanilla and modded instances."',
     },
     nav: {
       ariaLabel: 'Main navigation',
@@ -65,9 +65,21 @@ export const ui = {
         body: 'Modern Fabric, mid-era Forge, snapshots, and alphas the official launcher does not even list. Every version, every loader, side by side.',
         art: {
           cards: [
-            { image: 'fabric-lab', name: 'Fabric Lab', detail: 'Fabric 1.21.5' },
-            { image: 'forge-works', name: 'Forge Works', detail: 'Forge 1.16.5' },
-            { image: 'time-capsule', name: 'Time Capsule', detail: 'Alpha 1.2.6' },
+            {
+              image: 'fabric-lab',
+              name: 'Fabric Lab',
+              detail: 'Fabric 1.21.5',
+            },
+            {
+              image: 'forge-works',
+              name: 'Forge Works',
+              detail: 'Forge 1.16.5',
+            },
+            {
+              image: 'time-capsule',
+              name: 'Time Capsule',
+              detail: 'Alpha 1.2.6',
+            },
           ],
         },
       },
@@ -129,7 +141,7 @@ export const ui = {
         'Axial es el launcher de Minecraft que se ocupa de la parte técnica: Java, memoria, loaders y reparaciones. Cada instancia, mod y mundo en su sitio. Descargas gratis para macOS, Linux y Windows.',
       ogLocale: 'es_ES',
       ogImageAlt:
-        'Logotipo de Axial con el lema "Tu Minecraft, por fin en orden" junto a la pantalla de inicio del launcher',
+        'Logotipo de Axial sobre cinco ajolotes en verde, cian, lavanda, rosa y amarillo, con el lema en inglés: "A Minecraft launcher for vanilla and modded instances."',
     },
     nav: {
       ariaLabel: 'Navegación principal',
@@ -183,9 +195,21 @@ export const ui = {
         body: 'Fabric moderno, Forge de la vieja escuela, snapshots e incluso alfas que el launcher oficial ni siquiera enseña. Todas las versiones y todos los loaders, juntos en tu biblioteca.',
         art: {
           cards: [
-            { image: 'fabric-lab', name: 'Fabric Lab', detail: 'Fabric 1.21.5' },
-            { image: 'forge-works', name: 'Forge Works', detail: 'Forge 1.16.5' },
-            { image: 'time-capsule', name: 'Time Capsule', detail: 'Alpha 1.2.6' },
+            {
+              image: 'fabric-lab',
+              name: 'Fabric Lab',
+              detail: 'Fabric 1.21.5',
+            },
+            {
+              image: 'forge-works',
+              name: 'Forge Works',
+              detail: 'Forge 1.16.5',
+            },
+            {
+              image: 'time-capsule',
+              name: 'Time Capsule',
+              detail: 'Alpha 1.2.6',
+            },
           ],
         },
       },

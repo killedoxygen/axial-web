@@ -71,7 +71,7 @@ const downloads = [
   <header class="site-header">
     <nav class="site-nav" aria-label={copy.nav.ariaLabel}>
       <a class="brand" href="#top" aria-label={copy.nav.homeAriaLabel}>
-        <img src="/logo.png" width="34" height="34" alt="" />
+        <img src="/logo.svg" width="34" height="34" alt="" />
         <span>Axial</span>
       </a>
 
@@ -111,6 +111,13 @@ const downloads = [
 
   <main id="top" class="shell">
     <section class="hero">
+      <img
+        class="hero-mascot"
+        src="/logo.svg"
+        width="100"
+        height="100"
+        alt=""
+      />
       <h1>{copy.hero.title[0]} <br />{copy.hero.title[1]}</h1>
       <p class="hero-sub">{copy.hero.description}</p>
       <div class="hero-actions">
@@ -138,6 +145,10 @@ const downloads = [
           alt={copy.screenshot.alt}
           fetchpriority="high"
         />
+        <!-- Keep the existing product capture in step with the current brand. -->
+        <div class="screenshot-brand" aria-hidden="true">
+          <img src="/logo.svg" width="60" height="60" alt="" />
+        </div>
         <div class="bleed-fade" aria-hidden="true"></div>
       </div>
     </section>
@@ -181,7 +192,9 @@ const downloads = [
       <article class="feature">
         <div class="feature-art" aria-hidden="true">
           <div class="art-panel">
-            <span class="art-panel-heading">{copy.features.modded.art.heading}</span>
+            <span class="art-panel-heading"
+              >{copy.features.modded.art.heading}</span
+            >
             <div class="art-line">
               <span class="art-check">
                 <Icon name="check" size={13} />
@@ -304,7 +317,7 @@ const downloads = [
   <footer class="site-footer">
     <div class="footer-top">
       <a class="brand brand-small" href="#top">
-        <img src="/logo.png" width="28" height="28" alt="" />
+        <img src="/logo.svg" width="28" height="28" alt="" />
         <span>Axial</span>
       </a>
       <div class="footer-links">
