@@ -24,6 +24,14 @@
   animation: blink 6.4s infinite;
 }
 
+.axo-wink-lid {
+  fill: none;
+  stroke: var(--axo-hole, var(--ink));
+  stroke-width: 12;
+  stroke-linecap: round;
+  opacity: 0;
+}
+
 .peek {
   display: block;
   overflow: hidden;

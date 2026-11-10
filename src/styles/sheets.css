@@ -113,19 +113,23 @@
 .js .is-in .frag > * {
   opacity: 1;
   transform: none;
+  transition-delay: var(--reveal-delay, 0ms);
 }
 
 .js .is-in .frag > :nth-child(1) {
-  transition-delay: 250ms;
+  --reveal-delay: 250ms;
 }
 .js .is-in .frag > :nth-child(2) {
-  transition-delay: 450ms;
+  --reveal-delay: 450ms;
 }
 .js .is-in .frag > :nth-child(3) {
-  transition-delay: 650ms;
+  --reveal-delay: 650ms;
 }
 .js .is-in .frag > :nth-child(4) {
-  transition-delay: 850ms;
+  --reveal-delay: 850ms;
+}
+.js .is-in .frag > :nth-child(5) {
+  --reveal-delay: 1050ms;
 }
 
 .frag--tiles {
@@ -191,6 +195,66 @@
   border-radius: 50%;
   background: var(--green);
   color: var(--ink);
+}
+
+.tick--axolotl {
+  --axo-hole: var(--green);
+}
+
+.tick--axolotl .axo {
+  width: 85%;
+}
+
+.tick--axolotl .axo-eye {
+  animation: none;
+}
+
+/* The checklist triggers this once the face is visible and its row has settled. */
+.tick--axolotl.is-winking .axo-eye--wink {
+  animation: wink-eye 260ms steps(1, end) both;
+}
+
+.tick--axolotl.is-winking .axo-wink-lid {
+  animation: wink-lid 260ms steps(1, end) both;
+}
+
+.tick--axolotl.is-winking .axo {
+  transform-origin: 50% 65%;
+  animation: wink-tilt 260ms ease-out both;
+}
+
+/* Swap to a drawn eyelid: squeezing the square eye makes an unreadable slit. */
+@keyframes wink-eye {
+  0%,
+  65%,
+  100% {
+    opacity: 1;
+  }
+  20% {
+    opacity: 0;
+  }
+}
+
+@keyframes wink-lid {
+  0%,
+  65%,
+  100% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+}
+
+@keyframes wink-tilt {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  20%,
+  65% {
+    transform: rotate(-6deg);
+  }
 }
 
 @media (min-width: 900px) and (min-height: 680px) {

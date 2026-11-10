@@ -1,24 +1,65 @@
 ---
 import { Icon } from '../Icon.tsx';
+import Axolotl from '../Axolotl.astro';
 
 interface Props {
   heading: string;
   items: readonly string[];
+  axolotlItem?: number;
 }
 
-const { heading, items } = Astro.props;
+const { heading, items, axolotlItem = -1 } = Astro.props;
 ---
 
 <div class="frag frag--steps">
   <span class="frag-heading">{heading}</span>
   {
-    items.map((item) => (
+    items.map((item, index) => (
       <div class="step">
-        <span class="tick">
-          <Icon name="check" size={16} />
+        <span class:list={['tick', { 'tick--axolotl': index === axolotlItem }]}>
+          {index === axolotlItem ? (
+            <Axolotl wink />
+          ) : (
+            <Icon name="check" size={16} />
+          )}
         </span>
         <span>{item}</span>
       </div>
     ))
   }
 </div>
+
+<script>
+  import { prefersReducedMotion } from '../../scripts/motion.ts';
+
+  if (!prefersReducedMotion()) {
+    document.querySelectorAll<HTMLElement>('.tick--axolotl').forEach((face) => {
+      const row = face.closest<HTMLElement>('.step');
+      if (!row) return;
+
+      let visible = false;
+      const winkWhenReady = () => {
+        if (!visible || Number(getComputedStyle(row).opacity) < 1) return;
+        face.classList.add('is-winking');
+        observer.disconnect();
+        row.removeEventListener('transitionend', onRevealEnd);
+      };
+      const onRevealEnd = (event: TransitionEvent) => {
+        if (event.target === row && event.propertyName === 'opacity') {
+          winkWhenReady();
+        }
+      };
+      // A section can reveal while this last row is still below the viewport.
+      // Wait for both visibility and the end of the row's fade, in either order.
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          visible = entry.isIntersecting && entry.intersectionRatio >= 1;
+          winkWhenReady();
+        },
+        { threshold: 1 },
+      );
+      row.addEventListener('transitionend', onRevealEnd);
+      observer.observe(face);
+    });
+  }
+</script>

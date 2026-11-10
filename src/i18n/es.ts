@@ -105,7 +105,7 @@ export const es: Copy = {
       body: 'Axial no tiene modelo de negocio ni segundas intenciones. Es gratis, de código abierto con licencia MIT, y lo próximo que hagamos será lo que pida la comunidad.',
       art: {
         heading: 'Lo que te llevas',
-        items: ['Sin anuncios', 'Sin bloatware', 'Licencia MIT'],
+        items: ['Sin anuncios', 'Sin bloatware', 'Licencia MIT', 'Es monísimo'],
       },
     },
   },

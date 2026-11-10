@@ -5,10 +5,13 @@ interface Props {
   /** `full` is the whole mark, `eyes` stops under the eyes, `smile` under the mouth. */
   crop?: 'full' | 'eyes' | 'smile';
   class?: string;
+  /** Include a closed eyelid for the checklist's one-shot wink. */
+  wink?: boolean;
 }
 
-const { crop = 'full', class: className } = Astro.props;
+const { crop = 'full', class: className, wink = false } = Astro.props;
 const viewBox = markCrops[crop].join(' ');
+const rightEye = mark.eyes[1];
 ---
 
 <svg class:list={['axo', className]} viewBox={viewBox} aria-hidden="true">
@@ -16,7 +19,22 @@ const viewBox = markCrops[crop].join(' ');
   <path class="axo-gill axo-gill--right" d={mark.paths.right_gills}></path>
   <path d={mark.paths.body}></path>
   <g class="axo-look">
-    {mark.eyes.map((eye) => <rect class="axo-eye" {...eye} />)}
+    {
+      mark.eyes.map((eye, index) => (
+        <rect
+          class:list={['axo-eye', { 'axo-eye--wink': wink && index === 1 }]}
+          {...eye}
+        />
+      ))
+    }
+    {
+      wink && (
+        <path
+          class="axo-wink-lid"
+          d={`M${rightEye.x - 2} ${rightEye.y + 21} Q${rightEye.x + rightEye.width / 2} ${rightEye.y - 1} ${rightEye.x + rightEye.width + 2} ${rightEye.y + 21}`}
+        />
+      )
+    }
     <path class="axo-mouth" d={mark.paths.mouth}></path>
   </g>
 </svg>

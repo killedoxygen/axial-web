@@ -52,5 +52,5 @@ const cover = (name: string) => {
 </FeatureSheet>
 
 <FeatureSheet color="pink" title={open.title} body={open.body}>
-  <FeatureChecklist {...open.art} />
+  <FeatureChecklist {...open.art} axolotlItem={open.art.items.length - 1} />
 </FeatureSheet>

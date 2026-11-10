@@ -95,7 +95,7 @@ export const en = {
       body: 'Axial has no business model and no hidden agenda. It is free, MIT licensed and built in the open, and what comes next is whatever players ask for.',
       art: {
         heading: 'What you install',
-        items: ['No ads', 'Nothing bundled', 'MIT licensed'],
+        items: ['No ads', 'Nothing bundled', 'MIT licensed', "It's cute"],
       },
     },
   },
