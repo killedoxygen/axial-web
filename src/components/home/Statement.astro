@@ -1,0 +1,44 @@
+---
+import { useCopy } from '../../i18n/index.ts';
+
+const copy = useCopy(Astro.currentLocale);
+---
+
+<section class="say" aria-label={copy.ethos.ariaLabel}>
+  <p>
+    {
+      copy.ethos.parts.map(([text, emphasized]) =>
+        text
+          .split(/(\s+)/)
+          .map((token) =>
+            token.trim() ? (
+              <span class:list={['w', { 'w--em': emphasized }]}>{token}</span>
+            ) : token ? (
+              ' '
+            ) : null,
+          ),
+      )
+    }
+  </p>
+</section>
+
+<script>
+  import { clamp, onViewportChange } from '../../scripts/motion.ts';
+
+  /* ---- the statement fills in word by word as it scrolls past ---- */
+  const say = document.querySelector<HTMLElement>('.say p');
+  const words = say ? Array.from(say.querySelectorAll('.w')) : [];
+  if (say && words.length) {
+    onViewportChange(() => {
+      const vh = innerHeight;
+      const rect = say.getBoundingClientRect();
+      const progress = clamp(
+        (vh * 0.82 - rect.top) / (rect.height + vh * 0.32),
+      );
+      const lit = Math.round(progress * words.length);
+      words.forEach((word, index) =>
+        word.classList.toggle('is-lit', index < lit),
+      );
+    });
+  }
+</script>

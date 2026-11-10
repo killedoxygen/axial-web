@@ -4,5 +4,7 @@
   "compatibility_date": "2026-11-01",
   "assets": {
     "directory": "./dist",
+    // Serve the nearest 404.html: Spanish under /es/, English elsewhere.
+    "not_found_handling": "404-page",
   },
 }

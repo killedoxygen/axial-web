@@ -1,0 +1,92 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import { useCopy } from '../../i18n/index.ts';
+import { Icon } from '../Icon.tsx';
+import FeatureSheet from './FeatureSheet.astro';
+
+const { lowEnd, highEnd, versions, ux, open } = useCopy(
+  Astro.currentLocale,
+).features;
+
+const coverFiles = import.meta.glob<{ default: ImageMetadata }>(
+  '../../assets/images/covers/*.png',
+  { eager: true },
+);
+const cover = (name: string) => {
+  const file = coverFiles[`../../assets/images/covers/${name}.png`];
+  if (!file) throw new Error(`No cover image named "${name}"`);
+  return file.default;
+};
+---
+
+{
+  [
+    { color: 'green', feature: lowEnd },
+    { color: 'yellow', feature: highEnd },
+  ].map(({ color, feature }) => (
+    <FeatureSheet
+      color={color as 'green' | 'yellow'}
+      title={feature.title}
+      body={feature.body}
+    >
+      <div class="frag frag--steps">
+        <span class="frag-heading">{feature.art.heading}</span>
+        {feature.art.items.map((item) => (
+          <div class="step">
+            <span class="tick">
+              <Icon name="check" size={16} />
+            </span>
+            <span>{item}</span>
+          </div>
+        ))}
+      </div>
+    </FeatureSheet>
+  ))
+}
+
+<FeatureSheet color="cyan" title={versions.title} body={versions.body}>
+  <div class="frag frag--tiles">
+    {
+      versions.art.cards.map((card) => (
+        <div class="tile">
+          <Image src={cover(card.image)} width={428} height={259} alt="" />
+          <span class="tile-name">{card.name}</span>
+          <span class="tile-detail">{card.detail}</span>
+        </div>
+      ))
+    }
+  </div>
+</FeatureSheet>
+
+<FeatureSheet color="peri" title={ux.title} body={ux.body}>
+  <div class="frag frag--steps">
+    <span class="frag-heading">{ux.art.heading}</span>
+    {
+      ux.art.items.map((item) => (
+        <div class="step">
+          <span class="tick">
+            <Icon name="check" size={16} />
+          </span>
+          <span>{item}</span>
+        </div>
+      ))
+    }
+  </div>
+</FeatureSheet>
+
+<FeatureSheet color="pink" title={open.title} body={open.body}>
+  <div class="frag frag--steps">
+    <span class="frag-heading">{open.art.heading}</span>
+    {
+      open.art.items.map((item) => (
+        <div class="step">
+          <span class="tick">
+            <Icon name="check" size={16} />
+          </span>
+          <span>{item}</span>
+        </div>
+      ))
+    }
+  </div>
+</FeatureSheet>

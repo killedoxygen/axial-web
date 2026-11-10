@@ -1,0 +1,24 @@
+---
+import { links } from '../../config/site.ts';
+import { useCopy } from '../../i18n/index.ts';
+import Peek, { crewColors } from '../Peek.astro';
+
+const copy = useCopy(Astro.currentLocale);
+---
+
+<footer class="footer reveal">
+  <div class="footer-top">
+    <div class="footer-word" aria-hidden="true">Axial</div>
+    <div class="footer-side">
+      <p>{copy.footer.tagline}</p>
+      <div class="footer-links">
+        <a class="text-link" href="#downloads">{copy.nav.downloads}</a>
+        <a class="text-link" href={links.github}>GitHub</a>
+        <a class="text-link" href={links.releases}>{copy.footer.releases}</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-crew" aria-hidden="true">
+    {crewColors.map((color) => <Peek color={color} crop="smile" />)}
+  </div>
+</footer>

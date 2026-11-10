@@ -1,78 +1,35 @@
 ---
 import '../styles/global.css';
+import Seo from '../components/Seo.astro';
+import { resolveLocale } from '../i18n/index.ts';
 
 interface Props {
   title: string;
   description: string;
-  lang: 'en' | 'es';
-  ogLocale: string;
-  ogImageAlt: string;
+  noindex?: boolean;
 }
 
-const { title, description, lang, ogLocale, ogImageAlt } = Astro.props;
-
-const site = Astro.site!;
-const canonical = new URL(Astro.url.pathname, site);
-const enUrl = new URL('/', site);
-const esUrl = new URL('/es/', site);
-const ogImage = new URL('/brand/social-preview.png', site);
-const ogLocaleAlternate = lang === 'en' ? 'es_ES' : 'en_US';
-
-const jsonLd = JSON.stringify({
-  '@context': 'https://schema.org',
-  '@type': 'SoftwareApplication',
-  name: 'Axial',
-  description,
-  url: site.href,
-  image: ogImage.href,
-  applicationCategory: 'GameApplication',
-  operatingSystem: 'macOS, Windows, Linux',
-  downloadUrl: 'https://github.com/mateoltd/axial/releases',
-  offers: {
-    '@type': 'Offer',
-    price: '0',
-    priceCurrency: 'EUR',
-  },
-  author: {
-    '@type': 'Person',
-    name: 'mateoltd',
-    url: 'https://github.com/mateoltd',
-  },
-});
+const { title, description, noindex } = Astro.props;
 ---
 
 <!doctype html>
-<html lang={lang}>
+<html lang={resolveLocale(Astro.currentLocale)}>
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>{title}</title>
-    <meta name="description" content={description} />
-    <meta name="theme-color" content="#0B0F0A" />
-    <link rel="canonical" href={canonical} />
-    <link rel="alternate" hreflang="en" href={enUrl} />
-    <link rel="alternate" hreflang="es" href={esUrl} />
-    <link rel="alternate" hreflang="x-default" href={enUrl} />
-    <meta property="og:site_name" content="Axial" />
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content={canonical} />
-    <meta property="og:locale" content={ogLocale} />
-    <meta property="og:locale:alternate" content={ogLocaleAlternate} />
-    <meta property="og:image" content={ogImage} />
-    <meta property="og:image:type" content="image/png" />
-    <meta property="og:image:width" content="1280" />
-    <meta property="og:image:height" content="640" />
-    <meta property="og:image:alt" content={ogImageAlt} />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={ogImage} />
-    <meta name="twitter:image:alt" content={ogImageAlt} />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" type="image/png" href="/favicon.png" sizes="32x32" />
-    <script is:inline type="application/ld+json" set:html={jsonLd} />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- The headline is the first thing painted, so fetch its font early. -->
+    <link
+      rel="preload"
+      href="/fonts/Manrope-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <Seo title={title} description={description} noindex={noindex} />
+    <!-- Motion styles only apply once scripts can run them. -->
+    <script is:inline>
+      document.documentElement.classList.add('js');
+    </script>
   </head>
   <body>
     <slot />

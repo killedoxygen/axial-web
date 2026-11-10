@@ -9,6 +9,8 @@ const iconSubset = fileURLToPath(
 export default defineConfig({
   site: 'https://axial.run',
   integrations: [react()],
+  // Keep index routes as directories and locale error pages as /es/404.html.
+  build: { format: 'preserve' },
   i18n: {
     defaultLocale: 'en',
     locales: ['en', 'es'],

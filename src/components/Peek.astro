@@ -1,0 +1,17 @@
+---
+import Axolotl from './Axolotl.astro';
+
+export const crewColors = ['green', 'cyan', 'peri', 'pink', 'yellow'] as const;
+
+interface Props {
+  color: (typeof crewColors)[number] | 'ink';
+  /** How much of the axolotl shows above the edge it hides behind. */
+  crop?: 'eyes' | 'smile';
+}
+
+const { color, crop = 'eyes' } = Astro.props;
+---
+
+<span class={`peek peek--${color}`} aria-hidden="true"
+  ><Axolotl crop={crop} /></span
+>

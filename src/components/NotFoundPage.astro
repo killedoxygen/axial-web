@@ -1,0 +1,59 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import Peek from './Peek.astro';
+import { resolveLocale, useCopy } from '../i18n/index.ts';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const locale = resolveLocale(Astro.currentLocale);
+const copy = useCopy(locale).notFound;
+---
+
+<BaseLayout title={copy.title} description={copy.body} noindex>
+  <main class="lost">
+    <div class="lost-peek"><Peek color="green" /></div>
+    <section>
+      <h1>{copy.heading}</h1>
+      <p>{copy.body}</p>
+      <a class="text-link" href={getRelativeLocaleUrl(locale, '')}>
+        {copy.home}
+      </a>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  .lost {
+    display: grid;
+    align-content: center;
+    gap: 48px;
+    min-height: 100svh;
+    max-width: 720px;
+    padding: 64px var(--gutter);
+  }
+
+  .lost-peek {
+    width: 120px;
+  }
+
+  /* Outside the home page nothing scrolls the axolotl into view. */
+  .lost-peek :global(.axo) {
+    transform: none;
+  }
+
+  section {
+    display: grid;
+    justify-items: start;
+    gap: 10px;
+  }
+
+  h1 {
+    font-size: clamp(30px, 5vw, 52px);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+
+  p {
+    color: var(--gray);
+  }
+</style>

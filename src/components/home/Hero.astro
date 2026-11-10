@@ -1,0 +1,107 @@
+---
+import { Image } from 'astro:assets';
+import launcherHome from '../../assets/images/launcher-home.jpg';
+import { useCopy } from '../../i18n/index.ts';
+import Axolotl from '../Axolotl.astro';
+import { Icon } from '../Icon.tsx';
+import Peek, { crewColors } from '../Peek.astro';
+
+const copy = useCopy(Astro.currentLocale);
+---
+
+<section class="hero">
+  <h1 class="hero-title">
+    <span class="line"><span>{copy.hero.title[0]}</span></span>
+    <span class="line"><span>{copy.hero.title[1]}</span></span>
+  </h1>
+
+  <div class="hero-row">
+    <p class="hero-sub">{copy.hero.description}</p>
+    <div class="hero-actions">
+      <a
+        class="btn"
+        id="hero-download"
+        href="#downloads"
+        data-mac-label={copy.downloads.platformLabels.mac}
+        data-win-label={copy.downloads.platformLabels.win}
+        data-linux-label={copy.downloads.platformLabels.linux}
+      >
+        <Icon name="download" size={19} />
+        <span id="hero-download-label">{copy.hero.download}</span>
+      </a>
+      <a class="text-link" href="#downloads">{copy.hero.allPlatforms}</a>
+    </div>
+  </div>
+
+  <div class="product" aria-label={copy.screenshot.ariaLabel}>
+    <div class="crew" aria-hidden="true">
+      {crewColors.map((color) => <Peek color={color} />)}
+    </div>
+    <div class="shot">
+      <div class="shot-in">
+        <!-- The largest paint on the page: load it first, in a size that fits.
+             Small screens show the capture at 185% of the viewport. -->
+        <Image
+          src={launcherHome}
+          alt={copy.screenshot.alt}
+          widths={[960, 1440, 1920, launcherHome.width]}
+          sizes="(max-width: 599px) 185vw, 100vw"
+          quality={82}
+          loading="eager"
+          decoding="auto"
+          fetchpriority="high"
+        />
+        <!-- The capture predates the rebrand; cover only its retired sidebar mark. -->
+        <div class="shot-brand" aria-hidden="true">
+          <Axolotl />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { onViewportChange } from '../../scripts/motion.ts';
+
+  /* ---- platform-aware download button ---- */
+  const button = document.querySelector<HTMLAnchorElement>('#hero-download');
+  const label = document.querySelector<HTMLElement>('#hero-download-label');
+  const ua = navigator.userAgent;
+  const platform = /Mac/i.test(ua)
+    ? 'mac'
+    : /Win/i.test(ua)
+      ? 'win'
+      : /Linux|X11/i.test(ua)
+        ? 'linux'
+        : null;
+
+  if (platform && button && label) {
+    const platformLabel = button.dataset[`${platform}Label`];
+    const rowId = `download-${{ mac: 'macos', win: 'windows', linux: 'linux' }[platform]}`;
+    if (platformLabel) {
+      label.textContent = platformLabel;
+      button.href = `#${rowId}`;
+    }
+    document.getElementById(rowId)?.setAttribute('data-current', '');
+  }
+
+  /* The nav button fills in once the hero button has scrolled away. */
+  if (button) {
+    new IntersectionObserver(([entry]) => {
+      document.documentElement.classList.toggle(
+        'past-hero',
+        !entry.isIntersecting,
+      );
+    }).observe(button);
+  }
+
+  /* ---- the crew ducks behind the product as it settles ---- */
+  const product = document.querySelector<HTMLElement>('.product');
+  const crew = document.querySelector<HTMLElement>('.crew');
+  if (product && crew) {
+    onViewportChange(() => {
+      const top = product.getBoundingClientRect().top;
+      crew.classList.toggle('is-in', top > innerHeight * 0.22);
+    });
+  }
+</script>

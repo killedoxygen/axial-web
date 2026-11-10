@@ -1,0 +1,152 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import { links } from '../../config/site.ts';
+import { locales, resolveLocale, ui, useCopy } from '../../i18n/index.ts';
+import Axolotl from '../Axolotl.astro';
+import { Icon } from '../Icon.tsx';
+
+const locale = resolveLocale(Astro.currentLocale);
+const copy = useCopy(locale);
+---
+
+<header class="nav">
+  <nav class="nav-in" aria-label={copy.nav.ariaLabel}>
+    <a class="brand" href="#top" aria-label={copy.nav.homeAriaLabel}>
+      <Axolotl class="brand-mark" />
+      <span>Axial</span>
+    </a>
+
+    <div class="nav-links">
+      <a class="nav-link" href="#downloads">{copy.nav.downloads}</a>
+      <a class="nav-link" href={links.github}>GitHub</a>
+
+      <details class="lang">
+        <summary aria-label={copy.nav.languageAriaLabel}>
+          <svg
+            width="17"
+            height="17"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.9"
+            stroke-linecap="round"
+            aria-hidden="true"
+          >
+            <circle cx="12" cy="12" r="9"></circle>
+            <path d="M3 12h18M12 3c3 3.2 3 14.800 0 18c-3-3.200-3-14.800 0-18z"
+            ></path>
+          </svg>
+          <span>{copy.languageName}</span>
+        </summary>
+        <div class="lang-menu">
+          {
+            locales.map((item) => (
+              <a
+                class="lang-item"
+                href={getRelativeLocaleUrl(item, '')}
+                lang={item}
+                hreflang={item}
+                aria-current={item === locale ? 'page' : undefined}
+              >
+                <span>{ui[item].languageName}</span>
+                {item === locale && <Icon name="check" size={16} />}
+              </a>
+            ))
+          }
+        </div>
+      </details>
+
+      <a class="nav-cta" href="#downloads">
+        <span>{copy.nav.download}</span>
+        <Icon name="download" size={16} />
+      </a>
+    </div>
+  </nav>
+</header>
+
+<script>
+  import { clamp, prefersReducedMotion } from '../../scripts/motion.ts';
+
+  /* ---- language menu ---- */
+  const lang = document.querySelector<HTMLDetailsElement>('.lang');
+  const langSummary = lang?.querySelector('summary');
+  const langMenu = lang?.querySelector<HTMLElement>('.lang-menu');
+  let langExpanded = lang?.open ?? false;
+  let langAnimation: Animation | undefined;
+
+  const setLanguageExpanded = (expanded: boolean) => {
+    if (!lang || !langMenu || expanded === langExpanded) return;
+    langExpanded = expanded;
+    langMenu.inert = !expanded;
+
+    if (prefersReducedMotion()) {
+      langAnimation?.cancel();
+      langAnimation = undefined;
+      lang.open = expanded;
+      return;
+    }
+
+    // Keep the details visible until the exit finishes; reverse in place
+    // when the trigger is clicked again during a transition.
+    lang.open = true;
+    if (!langAnimation) {
+      langAnimation = langMenu.animate(
+        [
+          { opacity: 0, transform: 'translateY(-8px) scale(0.96)' },
+          { opacity: 1, transform: 'translateY(0) scale(1)' },
+        ],
+        {
+          duration: 280,
+          easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
+          fill: 'both',
+        },
+      );
+      if (!expanded) langAnimation.currentTime = 280;
+      langAnimation.onfinish = () => {
+        lang.open = langExpanded;
+        langAnimation?.cancel();
+        langAnimation = undefined;
+      };
+    }
+    langAnimation.updatePlaybackRate(expanded ? 1 : -1.4);
+    langAnimation.play();
+  };
+
+  langSummary?.addEventListener('click', (event) => {
+    event.preventDefault();
+    setLanguageExpanded(!langExpanded);
+  });
+  document.addEventListener('click', (event) => {
+    if (langExpanded && !lang?.contains(event.target as Node)) {
+      setLanguageExpanded(false);
+    }
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && langExpanded) {
+      langSummary?.focus();
+      setLanguageExpanded(false);
+    }
+  });
+
+  /* ---- the nav mark leans toward the cursor ---- */
+  const brand = document.querySelector<HTMLElement>('.brand');
+  const mark = brand?.querySelector<SVGElement>('.brand-mark');
+  if (
+    brand &&
+    mark &&
+    !prefersReducedMotion() &&
+    matchMedia('(pointer: fine)').matches
+  ) {
+    brand.addEventListener('pointermove', (event) => {
+      const rect = mark.getBoundingClientRect();
+      const dx = (event.clientX - (rect.left + rect.width / 2)) / rect.width;
+      const dy = (event.clientY - (rect.top + rect.height / 2)) / rect.height;
+      brand.style.setProperty('--dx', clamp(dx, -1).toFixed(3));
+      brand.style.setProperty('--dy', clamp(dy, -1).toFixed(3));
+    });
+    brand.addEventListener('pointerleave', () => {
+      brand.style.removeProperty('--dx');
+      brand.style.removeProperty('--dy');
+    });
+  }
+</script>
