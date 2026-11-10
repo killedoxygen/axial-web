@@ -1,8 +1,9 @@
 ---
 import Peek from '../Peek.astro';
+import type { CrewColor } from '../../config/brand.ts';
 
 interface Props {
-  color: 'green' | 'peri' | 'cyan' | 'pink' | 'yellow';
+  color: CrewColor;
   title: string;
   body: string;
 }

@@ -1,4 +1,6 @@
 ---
+import { mark, markCrops } from '../config/brand.ts';
+
 interface Props {
   /** `full` is the whole mark, `eyes` stops under the eyes, `smile` under the mouth. */
   crop?: 'full' | 'eyes' | 'smile';
@@ -6,31 +8,15 @@ interface Props {
 }
 
 const { crop = 'full', class: className } = Astro.props;
-const viewBox = {
-  full: '0 60 500 330',
-  eyes: '0 70 500 226',
-  smile: '0 70 500 262',
-}[crop];
+const viewBox = markCrops[crop].join(' ');
 ---
 
 <svg class:list={['axo', className]} viewBox={viewBox} aria-hidden="true">
-  <path
-    class="axo-gill axo-gill--left"
-    d="M140.78 229.7A212.62 212.62 0 0 1 102.99 103.62A24 24 0 0 1 150.96 101.94A156.62 156.62 0 0 0 191.22 190.3ZM119.74 274.19A235.22 235.22 0 0 1 29.18 204.92A23 23 0 0 1 63.37 174.14A182.22 182.22 0 0 0 140.26 217.81ZM129.82 319.39A254.18 254.18 0 0 1 32.73 315.19A22 22 0 0 1 40.37 271.86A204.18 204.18 0 0 0 118.18 264.61Z"
-  ></path>
-  <path
-    class="axo-gill axo-gill--right"
-    d="M359.22 229.7A212.62 212.62 0 0 0 397.01 103.62A24 24 0 0 0 349.04 101.94A156.62 156.62 0 0 1 308.78 190.3ZM380.26 274.19A235.22 235.22 0 0 0 470.82 204.92A23 23 0 0 0 436.63 174.14A182.22 182.22 0 0 1 359.74 217.81ZM370.18 319.39A254.18 254.18 0 0 0 467.27 315.19A22 22 0 0 0 459.63 271.86A204.18 204.18 0 0 1 381.82 264.61Z"
-  ></path>
-  <path
-    d="M250 170C356.08 170 406 201.36 406 268C406 348.56 368.56 374 250 374C131.44 374 94 348.56 94 268C94 201.36 143.92 170 250 170Z"
-  ></path>
+  <path class="axo-gill axo-gill--left" d={mark.paths.left_gills}></path>
+  <path class="axo-gill axo-gill--right" d={mark.paths.right_gills}></path>
+  <path d={mark.paths.body}></path>
   <g class="axo-look">
-    <rect class="axo-eye" x="144" y="248" width="32" height="32" rx="10"></rect>
-    <rect class="axo-eye" x="324" y="248" width="32" height="32" rx="10"></rect>
-    <path
-      class="axo-mouth"
-      d="M284.14 295.34A49.5 49.5 0 0 1 215.86 295.34A6 6 0 0 1 224.14 286.66A37.5 37.5 0 0 0 275.86 286.66A6 6 0 0 1 284.14 295.34Z"
-    ></path>
+    {mark.eyes.map((eye) => <rect class="axo-eye" {...eye} />)}
+    <path class="axo-mouth" d={mark.paths.mouth}></path>
   </g>
 </svg>

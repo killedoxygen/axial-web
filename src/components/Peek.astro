@@ -1,10 +1,10 @@
 ---
 import Axolotl from './Axolotl.astro';
 
-export const crewColors = ['green', 'cyan', 'peri', 'pink', 'yellow'] as const;
+import type { CrewColor } from '../config/brand.ts';
 
 interface Props {
-  color: (typeof crewColors)[number];
+  color: CrewColor;
   /** How much of the axolotl shows above the edge it hides behind. */
   crop?: 'eyes' | 'smile';
 }

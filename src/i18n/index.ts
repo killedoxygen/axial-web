@@ -1,9 +1,9 @@
 import { en } from './en.ts';
 import { es } from './es.ts';
 
-export const defaultLocale = 'en';
-export const locales = ['en', 'es'] as const;
-export type Locale = (typeof locales)[number];
+import { defaultLocale, locales, type Locale } from '../config/locales.ts';
+
+export { defaultLocale, locales, type Locale };
 
 export const ui = { en, es } satisfies Record<Locale, unknown>;
 

@@ -1,0 +1,24 @@
+---
+import { Icon } from '../Icon.tsx';
+
+interface Props {
+  heading: string;
+  items: readonly string[];
+}
+
+const { heading, items } = Astro.props;
+---
+
+<div class="frag frag--steps">
+  <span class="frag-heading">{heading}</span>
+  {
+    items.map((item) => (
+      <div class="step">
+        <span class="tick">
+          <Icon name="check" size={16} />
+        </span>
+        <span>{item}</span>
+      </div>
+    ))
+  }
+</div>

@@ -2,7 +2,7 @@
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 import { useCopy } from '../../i18n/index.ts';
-import { Icon } from '../Icon.tsx';
+import FeatureChecklist from './FeatureChecklist.astro';
 import FeatureSheet from './FeatureSheet.astro';
 
 const { lowEnd, highEnd, versions, ux, open } = useCopy(
@@ -21,26 +21,14 @@ const cover = (name: string) => {
 ---
 
 {
-  [
-    { color: 'green', feature: lowEnd },
-    { color: 'yellow', feature: highEnd },
-  ].map(({ color, feature }) => (
-    <FeatureSheet
-      color={color as 'green' | 'yellow'}
-      title={feature.title}
-      body={feature.body}
-    >
-      <div class="frag frag--steps">
-        <span class="frag-heading">{feature.art.heading}</span>
-        {feature.art.items.map((item) => (
-          <div class="step">
-            <span class="tick">
-              <Icon name="check" size={16} />
-            </span>
-            <span>{item}</span>
-          </div>
-        ))}
-      </div>
+  (
+    [
+      { color: 'green', feature: lowEnd },
+      { color: 'yellow', feature: highEnd },
+    ] as const
+  ).map(({ color, feature }) => (
+    <FeatureSheet color={color} title={feature.title} body={feature.body}>
+      <FeatureChecklist {...feature.art} />
     </FeatureSheet>
   ))
 }
@@ -60,33 +48,9 @@ const cover = (name: string) => {
 </FeatureSheet>
 
 <FeatureSheet color="peri" title={ux.title} body={ux.body}>
-  <div class="frag frag--steps">
-    <span class="frag-heading">{ux.art.heading}</span>
-    {
-      ux.art.items.map((item) => (
-        <div class="step">
-          <span class="tick">
-            <Icon name="check" size={16} />
-          </span>
-          <span>{item}</span>
-        </div>
-      ))
-    }
-  </div>
+  <FeatureChecklist {...ux.art} />
 </FeatureSheet>
 
 <FeatureSheet color="pink" title={open.title} body={open.body}>
-  <div class="frag frag--steps">
-    <span class="frag-heading">{open.art.heading}</span>
-    {
-      open.art.items.map((item) => (
-        <div class="step">
-          <span class="tick">
-            <Icon name="check" size={16} />
-          </span>
-          <span>{item}</span>
-        </div>
-      ))
-    }
-  </div>
+  <FeatureChecklist {...open.art} />
 </FeatureSheet>

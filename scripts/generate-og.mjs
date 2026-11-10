@@ -6,6 +6,7 @@ import { fileURLToPath } from 'node:url';
 import opentype from 'opentype.js';
 import sharp from 'sharp';
 import { locales, ui } from '../src/i18n/index.ts';
+import { mark, markCrops, crewPalette } from '../src/config/brand.ts';
 
 const path = (rel) => fileURLToPath(new URL(rel, import.meta.url));
 
@@ -15,7 +16,7 @@ const GUTTER = 72;
 const INK = '#0b0f0a';
 const PAPER = '#f0f3ef';
 const GRAY = '#a8aca6';
-const CREW = ['#87d576', '#0ed4f6', '#a2bcff', '#fe9fa6', '#d5bf36'];
+const CREW = Object.values(crewPalette);
 
 // Static instances of the site's Manrope. Text is drawn as outlines so the
 // cards render the same on every machine, whatever fonts it has installed.
@@ -28,19 +29,12 @@ const FONTS = {
   ),
 };
 
-const GILLS =
-  'M140.78 229.7A212.62 212.62 0 0 1 102.99 103.62A24 24 0 0 1 150.96 101.94A156.62 156.62 0 0 0 191.22 190.3ZM119.74 274.19A235.22 235.22 0 0 1 29.18 204.92A23 23 0 0 1 63.37 174.14A182.22 182.22 0 0 0 140.26 217.81ZM129.82 319.39A254.18 254.18 0 0 1 32.73 315.19A22 22 0 0 1 40.37 271.86A204.18 204.18 0 0 0 118.18 264.61ZM359.22 229.7A212.62 212.62 0 0 0 397.01 103.62A24 24 0 0 0 349.04 101.94A156.62 156.62 0 0 1 308.78 190.3ZM380.26 274.19A235.22 235.22 0 0 0 470.82 204.92A23 23 0 0 0 436.63 174.14A182.22 182.22 0 0 1 359.74 217.81ZM370.18 319.39A254.18 254.18 0 0 0 467.27 315.19A22 22 0 0 0 459.63 271.86A204.18 204.18 0 0 1 381.82 264.61Z';
-const FACE =
-  'M250 170C356.08 170 406 201.36 406 268C406 348.56 368.56 374 250 374C131.44 374 94 348.56 94 268C94 201.36 143.92 170 250 170Z';
-const MOUTH =
-  'M284.14 295.34A49.5 49.5 0 0 1 215.86 295.34A6 6 0 0 1 224.14 286.66A37.5 37.5 0 0 0 275.86 286.66A6 6 0 0 1 284.14 295.34Z';
-
 /** The mark drawn `width` wide with its 500-unit box's top-left at x, y. */
 function axolotl(x, y, width, color, hole = INK) {
   const s = width / 500;
   return `<g transform="translate(${x} ${y}) scale(${s})">
-    <path fill="${color}" d="${GILLS}"/><path fill="${color}" d="${FACE}"/>
-    <g fill="${hole}"><rect x="144" y="248" width="32" height="32" rx="10"/><rect x="324" y="248" width="32" height="32" rx="10"/><path d="${MOUTH}"/></g>
+    <path fill="${color}" d="${mark.paths.left_gills}${mark.paths.right_gills}"/><path fill="${color}" d="${mark.paths.body}"/>
+    <g fill="${hole}">${mark.eyes.map(({ x, y, width, height, rx }) => `<rect x="${x}" y="${y}" width="${width}" height="${height}" rx="${rx}"/>`).join('')}<path d="${mark.paths.mouth}"/></g>
   </g>`;
 }
 
@@ -103,7 +97,7 @@ async function card(locale) {
   const peekGap = 14;
   const crewW = CREW.length * peekW + (CREW.length - 1) * peekGap;
   const crewLeft = W - GUTTER - 28 - crewW;
-  const eyeLine = (296 / 500) * peekW; // Matches the page's `eyes` crop.
+  const eyeLine = ((markCrops.eyes[1] + markCrops.eyes[3]) / 500) * peekW; // Matches the page's `eyes` crop.
   const markW = 64;
   const vector = Buffer.from(
     `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}">

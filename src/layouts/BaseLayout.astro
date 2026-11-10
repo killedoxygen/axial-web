@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { crewPalette } from '../config/brand.ts';
 import Seo from '../components/Seo.astro';
 import { resolveLocale } from '../i18n/index.ts';
 
@@ -25,6 +26,12 @@ const { title, description, noindex } = Astro.props;
       type="font/woff2"
       crossorigin
     />
+    <style
+      is:inline
+      set:html={`:root {${Object.entries(crewPalette)
+        .map(([name, hex]) => `--${name}: ${hex};`)
+        .join('')}}`}
+    ></style>
     <Seo title={title} description={description} noindex={noindex} />
     <!-- Motion styles only apply once scripts can run them. -->
     <script is:inline>

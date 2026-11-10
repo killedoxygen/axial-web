@@ -1,6 +1,6 @@
 import { release } from '../config/release.ts';
 import { links, site } from '../config/site.ts';
-import type { Locale } from '../i18n/index.ts';
+import { locales, type Locale } from '../config/locales.ts';
 
 interface SchemaInput {
   locale: Locale;
@@ -35,7 +35,7 @@ export function landingSchema({
         name: site.name,
         alternateName: site.alternateName,
         url: origin,
-        inLanguage: ['en', 'es'],
+        inLanguage: locales,
       },
       {
         '@type': 'WebPage',

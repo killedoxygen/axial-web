@@ -33,8 +33,10 @@ pnpm run deploy
 ## Branding
 
 The axolotl mark and promotional artwork come from the Axial app's approved
-branding (design revision 2). `assets/brand-mark.json` preserves the source geometry
-and colours; `public/logo.svg` is the transparent mark, `public/logo.png` is the
+branding (design revision 2). `assets/brand-mark.json` supplies the shared geometry
+for the animated site mark and sharing-card generator. Its schema separates the
+body, gills, eyes, and mouth so the face can animate. `src/config/brand.ts` defines
+the shared crew palette and crops; `public/logo.svg` is the transparent mark, `public/logo.png` is the
 app icon, and `public/favicon.svg` and `.png` are the browser icons.
 
 `public/brand/banner.svg` is the original outlined Manrope banner. Sharing cards
@@ -63,6 +65,7 @@ when publishing launcher releases.
 
 ## Languages and SEO
 
+Supported languages and the default locale are defined in `src/config/locales.ts`.
 English lives at `/` and Spanish at `/es/`. Each page has localized titles,
 descriptions, Open Graph and Twitter metadata, a self-referencing canonical,
 and reciprocal `en`, `es`, and `x-default` alternates. The XML sitemap lists

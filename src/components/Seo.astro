@@ -25,11 +25,12 @@ const origin = Astro.site!;
 const absolute = (path: string) => new URL(path, origin).href;
 
 const canonical = absolute(Astro.url.pathname);
-const alternates = locales.map((item) => ({
-  locale: item,
-  href: absolute(localizePath(Astro.url.pathname, item)),
-}));
-const fallback = alternates.find((item) => item.locale === defaultLocale)!;
+const alternates = noindex
+  ? []
+  : locales.map((item) => ({
+      locale: item,
+      href: absolute(localizePath(Astro.url.pathname, item)),
+    }));
 
 // Rendered by `pnpm og`: 1200 × 630, one per locale.
 const image = absolute(`/brand/og-${locale}.png`);
@@ -63,7 +64,11 @@ const schema = noindex
       {alternates.map((item) => (
         <link rel="alternate" hreflang={item.locale} href={item.href} />
       ))}
-      <link rel="alternate" hreflang="x-default" href={fallback.href} />
+      <link
+        rel="alternate"
+        hreflang="x-default"
+        href={absolute(localizePath(Astro.url.pathname, defaultLocale))}
+      />
     </>
   )
 }
