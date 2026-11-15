@@ -150,10 +150,6 @@
   mask-image: linear-gradient(to bottom, #000 58%, transparent 100%);
 }
 
-.shot-in {
-  position: relative;
-}
-
 .shot-in > img {
   display: block;
   width: 100%;
@@ -162,17 +158,4 @@
   aspect-ratio: 2 / 1;
   object-fit: cover;
   object-position: top;
-}
-
-.shot-brand {
-  position: absolute;
-  top: 2%;
-  left: 1.2%;
-  display: grid;
-  place-items: center;
-  width: 3%;
-  aspect-ratio: 1;
-  background: #080b06;
-  color: var(--green);
-  --axo-hole: #080b06;
 }

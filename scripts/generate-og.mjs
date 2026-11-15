@@ -67,19 +67,10 @@ async function card(locale) {
   const shotTop = 286;
   const shotH = H - shotTop;
   const radius = 18;
-  const brand = shotW * 0.03; // Covers the capture's retired sidebar mark.
   const shot = await sharp(path('../src/assets/images/launcher-home.jpg'))
     .resize({ width: shotW })
     .extract({ left: 0, top: 0, width: shotW, height: shotH })
     .composite([
-      {
-        input: Buffer.from(
-          `<svg xmlns="http://www.w3.org/2000/svg" width="${shotW}" height="${shotH}">
-            <rect x="${shotW * 0.012}" y="${shotW * 0.0125}" width="${brand}" height="${brand}" fill="#080b06"/>
-            ${axolotl(shotW * 0.012, shotW * 0.0125 - brand * 0.06, brand, CREW[0], '#080b06')}
-          </svg>`,
-        ),
-      },
       {
         input: Buffer.from(
           `<svg xmlns="http://www.w3.org/2000/svg" width="${shotW}" height="${shotH}">

@@ -2,7 +2,6 @@
 import { Image } from 'astro:assets';
 import launcherHome from '../../assets/images/launcher-home.jpg';
 import { useCopy } from '../../i18n/index.ts';
-import Axolotl from '../Axolotl.astro';
 import { Icon } from '../Icon.tsx';
 import Peek from '../Peek.astro';
 import { crewColors } from '../../config/brand.ts';
@@ -52,10 +51,6 @@ const copy = useCopy(Astro.currentLocale);
           decoding="auto"
           fetchpriority="high"
         />
-        <!-- The capture predates the rebrand; cover only its retired sidebar mark. -->
-        <div class="shot-brand" aria-hidden="true">
-          <Axolotl />
-        </div>
       </div>
     </div>
   </div>
