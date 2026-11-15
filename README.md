@@ -44,9 +44,11 @@ are localized 1200 × 630 PNGs at `public/brand/og-en.png` and `og-es.png`.
 Run `pnpm og` after changing their copy or design; the generator uses font
 outlines for consistent rendering and keeps its source fonts in `assets/og/`.
 
-The product screenshot predates the rebrand. A positioned logo overlay hides its
-retired sidebar mark; remove `.screenshot-brand` when replacing the capture with
-a new screenshot from the app.
+The hero screenshot, `src/assets/images/launcher-home.jpg`, is a 2560 × 1600
+capture (1280 × 800 at 2×) of the app's Home screen. It comes from the frontend's
+mock mode (`pnpm dev:mock` in the app's `frontend/`) with the mock data staged as
+an idle library: one featured vanilla instance and one Fabric, Forge, NeoForge and
+Quilt instance each. Run `pnpm og` after replacing it.
 
 ## Code organization and checks
 
