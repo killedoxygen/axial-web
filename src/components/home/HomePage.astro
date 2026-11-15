@@ -24,7 +24,7 @@ const copy = useCopy(Astro.currentLocale);
     <div class="sheets">
       <Features />
 
-      <div class="sheet sheet--ink">
+      <div class="sheet sheet--ink" data-settle>
         <Downloads />
         <SiteFooter />
       </div>
@@ -36,6 +36,7 @@ const copy = useCopy(Astro.currentLocale);
 
 <script>
   import { prefersReducedMotion } from '../../scripts/motion.ts';
+  import '../../scripts/settle.ts';
 
   /* ---- things that appear when they scroll into view ---- */
   const seen = new IntersectionObserver(

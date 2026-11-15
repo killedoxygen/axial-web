@@ -264,4 +264,9 @@
     display: grid;
     min-height: calc(100svh - var(--nav-h));
   }
+
+  /* The settle script reads where the sheets sit before they stick. */
+  .is-measuring .sheet:not(.sheet--ink) {
+    position: relative;
+  }
 }

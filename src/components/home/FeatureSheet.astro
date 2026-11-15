@@ -11,7 +11,7 @@ interface Props {
 const { color, title, body } = Astro.props;
 ---
 
-<article class={`sheet sheet--${color} reveal`}>
+<article class={`sheet sheet--${color} reveal`} data-settle>
   <div class="sheet-in">
     <div class="sheet-text">
       <h2>{title}</h2>
